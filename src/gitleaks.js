@@ -90,14 +90,12 @@ async function Latest(octokit) {
 async function Scan(path) {
   let args = [];
 
-  if (path) {
-    args.push(`dir ${path}`);
-  } else {
+  if (!path) {
     core.error("No path provided");
     return 1;
   }
 
-  args.push("--redact", "-v", "--exit-code=2", "--log-level=debug");
+  args.push("dir", "--redact", "-v", "--exit-code=2", "--log-level=debug", path);
 
   core.info(`gitleaks cmd: gitleaks ${args.join(" ")}`);
   let exitCode = await exec.exec("gitleaks", args, {
