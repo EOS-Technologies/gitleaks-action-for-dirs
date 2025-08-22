@@ -6,6 +6,9 @@
     "@actions/exec": "^1.1.1",
     "@actions/tool-cache": "^1.7.2"
   },
+  "scripts": {
+    "compile": "ncc build src/index.js -o dist"
+  },
   "devDependencies": {
     "@vercel/ncc": "^0.34.0"
   },
