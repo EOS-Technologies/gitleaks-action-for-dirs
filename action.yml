@@ -3,12 +3,12 @@
 # You should have received a copy of the GITLEAKS-ACTION END-USER LICENSE AGREEMENT with this file.
 # If not, please visit https://gitleaks.io/COMMERCIAL-LICENSE.txt
 
-name: Gitleaks
-author: zricethezav
+name: GitleaksForDirectories
+author: EOS Technologies
 branding:
   icon: "git-pull-request"
   color: "purple"
-description: run gitleaks on push and pull-request events
+description: run gitleaks on directories
 runs:
   using: "node20"
   main: "dist/index.js"
