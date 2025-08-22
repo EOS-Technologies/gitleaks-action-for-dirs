@@ -116,5 +116,4 @@ async function Scan(path) {
 module.exports.Scan = Scan;
 module.exports.Latest = Latest;
 module.exports.Install = Install;
-module.exports.ScanPullRequest = ScanPullRequest;
 module.exports.EXIT_CODE_LEAKS_DETECTED = EXIT_CODE_LEAKS_DETECTED;
