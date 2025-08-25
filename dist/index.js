@@ -89793,7 +89793,7 @@ async function Latest(octokit) {
   return latest.data.tag_name.replace(/^v/, "");
 }
 
-async function Scan(path) {
+async function Scan(path, configurationPath) {
   let args = [];
 
   if (!path) {
@@ -89801,7 +89801,11 @@ async function Scan(path) {
     return 1;
   }
 
-  args.push("dir", "--redact", "-v", "--exit-code=2", "--log-level=debug", path);
+  args.push("dir", "--redact", "-v", "--exit-code=2", "--log-level=debug");
+  if (configurationPath) {
+    args.push("--config", configurationPath);
+  }
+  args.push(path);
 
   core.info(`gitleaks cmd: gitleaks ${args.join(" ")}`);
   let exitCode = await exec.exec("gitleaks", args, {
@@ -92318,13 +92322,14 @@ async function start() {
   core.info("gitleaks path: " + gitleaksPath);
 
   exitCode = await gitleaks.Scan(
-    process.env.GITLEAKS_DIRECTORY_TO_SCAN_PATH
+    process.env.GITLEAKS_DIRECTORY_TO_SCAN_PATH,
+    process.env.GITLEAKS_CONFIGURATION_PATH
   );
 
   if (exitCode == 0) {
     core.info("✅ No leaks detected");
   } else if (exitCode == gitleaks.EXIT_CODE_LEAKS_DETECTED) {
-    core.warning("🛑 Leaks detected, see job summary for details");
+    core.warning("🛑 Leaks detected, see logs for details");
     process.exit(1);
   } else {
     core.error(`ERROR: Unexpected exit code [${exitCode}]`);
